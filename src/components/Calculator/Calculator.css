@@ -130,8 +130,8 @@
   grid-row: 1;
 }
 .calculator__button_value_result {
-  grid-column: 5 / span 2;
-  grid-row: 4;
+  grid-column: 6;
+  grid-row: 3 / span 2;
   background-color: rgb(2, 168, 2);
 }
 .calculator__button_value_result:hover {
@@ -143,8 +143,8 @@
   grid-row: 3;
 }
 .calculator__button_value_minus {
-  grid-column: 6;
-  grid-row: 3;
+  grid-column: 5;
+  grid-row: 4;
 }
 .calculator__button_value_division {
   grid-column: 6;

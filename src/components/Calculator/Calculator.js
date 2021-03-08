@@ -17,6 +17,24 @@ const Calculator = () => {
   const handleResetValue = () => {
     setValue('0');
   };
+
+  const handleErrors = (action) => {
+    try {
+      const result = action(+value);
+      if (isNaN(result)) {
+        throw Error();
+      } else {
+        setValue(result.toString());
+      }
+    } catch {
+      const prevValue = value;
+      setValue('Ошибка!');
+      setTimeout(() => {
+        setValue(prevValue);
+      }, 1500);
+    }
+  };
+
   const handleComputeResult = () => {
     try {
       const result = eval(value);
@@ -30,17 +48,41 @@ const Calculator = () => {
       setValue('Ошибка!');
       setTimeout(() => {
         setValue(prevValue);
-      }, 2000);
+      }, 1500);
     }
   };
 
   const handleMemoPlusClick = () => {
-    const newValue = memoPlusValue + +value;
-    setMemoPlusValue(newValue);
+    try {
+      if (isNaN(+value)) {
+        throw Error();
+      } else {
+        const newValue = memoPlusValue + +value;
+        setMemoPlusValue(newValue);
+      }
+    } catch {
+      const prevValue = value;
+      setValue('Ошибка!');
+      setTimeout(() => {
+        setValue(prevValue);
+      }, 1500);
+    }
   };
   const handleMemoMinusClick = () => {
-    const newValue = memoMinusValue + +value;
-    setMemoMinusValue(newValue);
+    try {
+      if (isNaN(+value)) {
+        throw Error();
+      } else {
+        const newValue = memoMinusValue + +value;
+        setMemoMinusValue(newValue);
+      }
+    } catch {
+      const prevValue = value;
+      setValue('Ошибка!');
+      setTimeout(() => {
+        setValue(prevValue);
+      }, 1500);
+    }
   };
   const handleMemoResultClick = () => {
     const memoResultValue = memoPlusValue - memoMinusValue;
@@ -53,37 +95,23 @@ const Calculator = () => {
   };
 
   const handleComputeSin = () => {
-    setValue(Math.sin(+value).toString());
+    handleErrors(Math.sin);
   };
 
   const handleComputeCos = () => {
-    setValue(Math.cos(+value).toString());
+    handleErrors(Math.cos);
   };
 
   const handleComputeTg = () => {
-    setValue(Math.tan(+value).toString());
+    handleErrors(Math.tan);
   };
 
   const handleComputeCtg = () => {
-    setValue((1 / Math.tan(+value)).toString());
+    handleErrors((a) => 1 / Math.tan(a));
   };
 
   const handleComputeSqrt = () => {
-    try {
-      const result = Math.sqrt(+value);
-      console.log(result);
-      if (isNaN(result)) {
-        throw Error();
-      } else {
-        setValue(result.toString());
-      }
-    } catch {
-      const prevValue = value;
-      setValue('Ошибка!');
-      setTimeout(() => {
-        setValue(prevValue);
-      }, 2000);
-    }
+    handleErrors(Math.sqrt);
   };
 
   const handleBackspaceClick = () => {
