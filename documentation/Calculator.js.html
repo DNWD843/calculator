@@ -1,9 +1,37 @@
-import { useCalculator } from '../../hooks/useCalculator';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Calculator.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Calculator.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useCalculator } from '../../hooks/useCalculator';
 import './Calculator.css';
 
 /**
  * @module Calculator
- * @description Компонент Calculator.</br>Отвечает за отрисовку калькулятора.
+ * @description Компонент Calculator.&lt;/br>Отвечает за отрисовку калькулятора.
  * @since v.1.0.0
  * @returns {JSX}
  */
@@ -26,217 +54,240 @@ const Calculator = () => {
   } = useCalculator();
 
   return (
-    <div className="calculator page__calculator">
-      <input type="text" readOnly value={value} className="calculator__screen"></input>
-      <div className="calculator__buttons">
-        <button
+    &lt;div className="calculator page__calculator">
+      &lt;input type="text" readOnly value={value} className="calculator__screen">&lt;/input>
+      &lt;div className="calculator__buttons">
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_1"
           value="1"
         >
           1
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_2"
           value="2"
         >
           2
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_3"
           value="3"
         >
           3
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_4"
           value="4"
         >
           4
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_5"
           value="5"
         >
           5
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_6"
           value="6"
         >
           6
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_7"
           value="7"
         >
           7
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_8"
           value="8"
         >
           8
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_9"
           value="9"
         >
           9
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_0"
           value="0"
         >
           0
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleComputeResult}
           className="calculator__button calculator__button_value_result"
         >
           =
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_plus"
           value="+"
         >
           +
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_minus"
           value="-"
         >
           -
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_multiply"
           value="*"
         >
           x
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_division"
           value="/"
         >
           /
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleChangeValue}
           className="calculator__button calculator__button_value_dot"
           value="."
         >
           .
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleResetValue}
           className="calculator__button calculator__button_value_C"
         >
           C
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleMemoClearClick}
           className="calculator__button calculator__button_value_MC"
         >
           MC
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleMemoResultClick}
           className="calculator__button calculator__button_value_MR"
         >
           MR
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleMemoPlusClick}
           className="calculator__button calculator__button_value_M-PLUS"
         >
           M+
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleMemoMinusClick}
           className="calculator__button calculator__button_value_M-MINUS"
         >
           M-
-        </button>
+        &lt;/button>
 
-        <button
+        &lt;button
           type="button"
           onClick={handleComputeSin}
           className="calculator__button calculator__button_value_sin"
         >
           sin
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleComputeCos}
           className="calculator__button calculator__button_value_cos"
         >
           cos
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleComputeTg}
           className="calculator__button calculator__button_value_tg"
         >
           tg
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleComputeCtg}
           className="calculator__button calculator__button_value_ctg"
         >
           ctg
-        </button>
-        <button
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleComputeSqrt}
           className="calculator__button calculator__button_value_sqrt"
         >
-          &#8730;
-        </button>
-        <button
+          &amp;#8730;
+        &lt;/button>
+        &lt;button
           type="button"
           onClick={handleBackspaceClick}
           className="calculator__button calculator__button_value_backspace"
         >
-          &#10233;
-        </button>
-      </div>
-    </div>
+          &amp;#10233;
+        &lt;/button>
+      &lt;/div>
+    &lt;/div>
   );
 };
 
 export { Calculator };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Calculator.html">Calculator</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Mar 08 2021 15:27:55 GMT+0300 (Москва, стандартное время)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

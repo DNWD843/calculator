@@ -103,7 +103,7 @@
   grid-column: 4/5;
   grid-row: 4;
 }
-.calculator__button_value_CE {
+.calculator__button_value_C {
   grid-column: 1;
   grid-row: 3 / span 2;
   background-color: rgb(101, 188, 238);
@@ -130,8 +130,8 @@
   grid-row: 1;
 }
 .calculator__button_value_result {
-  grid-column: 5 / span 2;
-  grid-row: 4;
+  grid-column: 6;
+  grid-row: 3 / span 2;
   background-color: rgb(2, 168, 2);
 }
 .calculator__button_value_result:hover {
@@ -143,8 +143,8 @@
   grid-row: 3;
 }
 .calculator__button_value_minus {
-  grid-column: 6;
-  grid-row: 3;
+  grid-column: 5;
+  grid-row: 4;
 }
 .calculator__button_value_division {
   grid-column: 6;
@@ -155,6 +155,35 @@
   grid-row: 2;
 }
 
+.calculator__button_value_sin {
+  grid-column: 2;
+  grid-row: -2;
+}
+
+.calculator__button_value_cos {
+  grid-column: 3;
+  grid-row: -2;
+}
+
+.calculator__button_value_tg {
+  grid-column: 4;
+  grid-row: -2;
+}
+
+.calculator__button_value_ctg {
+  grid-column: 5;
+  grid-row: -2;
+}
+
+.calculator__button_value_sqrt {
+  grid-column: 6;
+  grid-row: -2;
+}
+.calculator__button_value_backspace {
+  grid-column: 1;
+  grid-row: -2;
+}
+
 @media screen and (max-width: 424px) {
   .calculator {
     border: 5px solid rgb(75, 74, 74);
@@ -162,6 +191,10 @@
     box-shadow: inset 0 0 5px rgb(32, 29, 26);
     padding: 7px;
   }
+  .calculator__screen {
+    font-size: 18px;
+  }
+
   .calculator__screen {
     margin-bottom: 10px;
     border-radius: 7px;
