@@ -192,6 +192,10 @@
     padding: 7px;
   }
   .calculator__screen {
+    font-size: 18px;
+  }
+
+  .calculator__screen {
     margin-bottom: 10px;
     border-radius: 7px;
   }
