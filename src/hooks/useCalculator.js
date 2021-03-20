@@ -12,7 +12,9 @@ const useCalculator = () => {
   const [value, setValue] = useState('0');
   const [memoPlusValue, setMemoPlusValue] = useState(0);
   const [memoMinusValue, setMemoMinusValue] = useState(0);
-
+  const [isMemoPlusEmpty, setIsMemoPlusEmpty] = useState(true);
+  const [isMemoMinusEmpty, setIsMemoMinusEmpty] = useState(true);
+  const [isRadValue, setIsRadValue] = useState(false);
   /**
    * @method handleChangeValue
    * @description Обработчик изменения значения, выводимого на дисплей калькулятора.
@@ -41,6 +43,7 @@ const useCalculator = () => {
    */
   const handleResetValue = useCallback(() => {
     setValue('0');
+    setIsRadValue(false);
   }, []);
 
   /**
@@ -63,6 +66,7 @@ const useCalculator = () => {
           throw Error();
         } else {
           setValue(result.toString());
+          setIsRadValue(true);
         }
       } catch {
         const prevValue = value;
@@ -117,6 +121,7 @@ const useCalculator = () => {
       } else {
         const newValue = memoPlusValue + +value;
         setMemoPlusValue(newValue);
+        setIsMemoPlusEmpty(false);
       }
     } catch {
       const prevValue = value;
@@ -143,6 +148,7 @@ const useCalculator = () => {
       } else {
         const newValue = memoMinusValue + +value;
         setMemoMinusValue(newValue);
+        setIsMemoMinusEmpty(false);
       }
     } catch {
       const prevValue = value;
@@ -178,6 +184,8 @@ const useCalculator = () => {
   const handleMemoClearClick = useCallback(() => {
     setMemoPlusValue(0);
     setMemoMinusValue(0);
+    setIsMemoPlusEmpty(true);
+    setIsMemoMinusEmpty(true);
   }, []);
 
   /**
@@ -276,6 +284,9 @@ const useCalculator = () => {
     handleComputeCtg,
     handleComputeSqrt,
     handleBackspaceClick,
+    isMemoPlusEmpty,
+    isMemoMinusEmpty,
+    isRadValue,
   };
 };
 export { useCalculator };

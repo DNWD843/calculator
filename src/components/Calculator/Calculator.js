@@ -1,4 +1,5 @@
 import { useCalculator } from '../../hooks/useCalculator';
+import classNames from 'classnames';
 import './Calculator.css';
 
 /**
@@ -23,11 +24,44 @@ const Calculator = () => {
     handleComputeCtg,
     handleComputeSqrt,
     handleBackspaceClick,
+    isMemoPlusEmpty,
+    isMemoMinusEmpty,
+    isRadValue,
   } = useCalculator();
+
+  const mPlusScreenSegmentClassName = classNames(
+    'calculator__screen-segment',
+    'calculator__screen-segment_type_m-plus',
+    {
+      'calculator__screen-segment_visible': !isMemoPlusEmpty,
+    },
+  );
+
+  const mMinusScreenSegmentClassName = classNames(
+    'calculator__screen-segment',
+    'calculator__screen-segment_type_m-minus',
+    {
+      'calculator__screen-segment_visible': !isMemoMinusEmpty,
+    },
+  );
+
+  const radianSegmentClassName = classNames(
+    'calculator__screen-segment',
+    'calculator__screen-segment_type_rad',
+    {
+      'calculator__screen-segment_visible': isRadValue,
+    },
+  );
 
   return (
     <div className="calculator page__calculator">
-      <input type="text" readOnly value={value} className="calculator__screen"></input>
+      <div className="calculator__screen-field">
+        <span className={mPlusScreenSegmentClassName}>M+</span>
+        <span className={mMinusScreenSegmentClassName}>M-</span>
+        <span className={radianSegmentClassName}>rad</span>
+        <input type="text" readOnly value={value} className="calculator__screen"></input>
+      </div>
+
       <div className="calculator__buttons">
         <button
           type="button"

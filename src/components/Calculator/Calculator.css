@@ -10,6 +10,32 @@
   background-color: rgb(102, 102, 102);
 }
 
+.calculator__screen-field {
+  position: relative;
+}
+
+.calculator__screen-segment {
+  position: absolute;
+  font-size: 12px;
+  top: 5px;
+  visibility: hidden;
+}
+.calculator__screen-segment_type_m-plus {
+  right: 70px;
+}
+
+.calculator__screen-segment_type_m-minus {
+  right: 45px;
+}
+
+.calculator__screen-segment_type_rad {
+  right: 10px;
+}
+
+.calculator__screen-segment_visible {
+  visibility: visible;
+}
+
 .calculator__screen {
   width: 100%;
   height: 70px;

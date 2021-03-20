@@ -34,4 +34,4 @@ author: Dmitry Neklyudov
 Реализована первая версия калькулятора.
 
 **Посмотреть проект**  
-Посмотреть портфолио можно <a href="https://dnwd843.github.io/calculator/. " target="_blank" rel="noreferrer noopener">ТУТ</a>
+Посмотреть проект можно <a href="https://dnwd843.github.io/calculator/. " target="_blank" rel="noreferrer noopener">ТУТ</a>
