@@ -23,15 +23,42 @@ const useCalculator = () => {
    * @returns {void}
    */
   const handleChangeValue = useCallback(
-    (evt) => {
+    (newValue) => {
       if (value === '0' || !value) {
-        setValue(evt.target.value);
+        setValue(newValue);
       } else {
-        setValue(value + evt.target.value);
+        setValue(value + newValue);
       }
+      document.activeElement.blur();
     },
     [value],
   );
+
+  /**
+   * @method handleComputeResult
+   * @description Обработчик нажатия на клавишу "равно", вычисляет введенное выражение
+   *  и выводит его на дисплей. Если в процессе выичсления происходит "деление на нуль",
+   *  на дисплей выводится сообщение об ошибке.
+   * @since v.1.0.0
+   * @public
+   * @returns {void}
+   */
+  const handleComputeResult = useCallback(() => {
+    try {
+      const result = eval(value);
+      if (result === Infinity) {
+        throw Error();
+      } else {
+        setValue(result.toString());
+      }
+    } catch {
+      const prevValue = value;
+      setValue('Ошибка!');
+      setTimeout(() => {
+        setValue(prevValue);
+      }, 1100);
+    }
+  }, [value]);
 
   /**
    * @method handleResetValue
@@ -45,6 +72,59 @@ const useCalculator = () => {
     setValue('0');
     setIsRadValue(false);
   }, []);
+
+  /**
+   * @method handleBackspaceClick
+   * @description Обработчик нажатия на клавишу Backspace.</br>
+   * Удаляет последний введенный символ на дисплее.
+   * @since v.1.0.0
+   * @public
+   * @returns {void}
+   */
+  const handleBackspaceClick = useCallback(() => {
+    if (value.length > 1) {
+      setValue(value.slice(0, value.length - 1));
+    } else {
+      setValue('0');
+    }
+  }, [value]);
+
+  const handleScreenKeyboardInput = useCallback((evt) => handleChangeValue(evt.target.value), [
+    handleChangeValue,
+  ]);
+
+  const handleKeyboardInput = useCallback(
+    (evt) => {
+      const keyboardKeys = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '+',
+        '-',
+        '*',
+        '/',
+        '.',
+      ];
+      if (keyboardKeys.includes(evt.key)) {
+        handleChangeValue(evt.key);
+      } else if (evt.key === 'Escape') {
+        handleResetValue();
+      } else if (evt.key === 'Enter' || '=') {
+        handleComputeResult();
+      }
+      if (evt.key === 'Backspace') {
+        handleBackspaceClick();
+      }
+    },
+    [handleChangeValue, handleResetValue, handleComputeResult, handleBackspaceClick],
+  );
 
   /**
    * @method handleErrors
@@ -78,32 +158,6 @@ const useCalculator = () => {
     },
     [value],
   );
-
-  /**
-   * @method handleComputeResult
-   * @description Обработчик нажатия на клавишу "равно", вычисляет введенное выражение
-   *  и выводит его на дисплей. Если в процессе выичсления происходит "деление на нуль",
-   *  на дисплей выводится сообщение об ошибке.
-   * @since v.1.0.0
-   * @public
-   * @returns {void}
-   */
-  const handleComputeResult = useCallback(() => {
-    try {
-      const result = eval(value);
-      if (result === Infinity) {
-        throw Error();
-      } else {
-        setValue(result.toString());
-      }
-    } catch {
-      const prevValue = value;
-      setValue('Ошибка!');
-      setTimeout(() => {
-        setValue(prevValue);
-      }, 1100);
-    }
-  }, [value]);
 
   /**
    * @method handleMemoPlusClick
@@ -253,25 +307,10 @@ const useCalculator = () => {
     handleErrors(Math.sqrt);
   }, [handleErrors]);
 
-  /**
-   * @method handleBackspaceClick
-   * @description Обработчик нажатия на клавишу Backspace.</br>
-   * Удаляет последний введенный символ на дисплее.
-   * @since v.1.0.0
-   * @public
-   * @returns {void}
-   */
-  const handleBackspaceClick = useCallback(() => {
-    if (value.length > 1) {
-      setValue(value.slice(0, value.length - 1));
-    } else {
-      setValue('0');
-    }
-  }, [value]);
-
   return {
     value,
-    handleChangeValue,
+    handleScreenKeyboardInput,
+    handleKeyboardInput,
     handleResetValue,
     handleComputeResult,
     handleMemoPlusClick,
