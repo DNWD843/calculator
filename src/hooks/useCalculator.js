@@ -12,7 +12,9 @@ const useCalculator = () => {
   const [value, setValue] = useState('0');
   const [memoPlusValue, setMemoPlusValue] = useState(0);
   const [memoMinusValue, setMemoMinusValue] = useState(0);
-
+  const [isMemoPlusEmpty, setIsMemoPlusEmpty] = useState(true);
+  const [isMemoMinusEmpty, setIsMemoMinusEmpty] = useState(true);
+  const [isRadValue, setIsRadValue] = useState(false);
   /**
    * @method handleChangeValue
    * @description Обработчик изменения значения, выводимого на дисплей калькулятора.
@@ -21,56 +23,13 @@ const useCalculator = () => {
    * @returns {void}
    */
   const handleChangeValue = useCallback(
-    (evt) => {
+    (newValue) => {
       if (value === '0' || !value) {
-        setValue(evt.target.value);
+        setValue(newValue);
       } else {
-        setValue(value + evt.target.value);
+        setValue(value + newValue);
       }
-    },
-    [value],
-  );
-
-  /**
-   * @method handleResetValue
-   * @description Обработчик нажатия на кнопку очистки дисплея.</br>
-   * Сбрасывает значение на дисплее на 0.
-   * @since v.1.0.0
-   * @public
-   * @returns {void}
-   */
-  const handleResetValue = useCallback(() => {
-    setValue('0');
-  }, []);
-
-  /**
-   * @method handleErrors
-   * @description Обработчик ошибок при выполнении математических действий.</br>
-   *  Принимает аргументом коллбэк action, который выполняет определенное действие.
-   *  Если в результате выполнения этого действия не произошло ошибок вычисления, результат
-   *  выводится на дисплей калькулятора. Если происходит ошибка вычисления, на дисплей
-   *  выводится сообщение об ошибке.
-   * @param {function} action - коллбэк, выполняет определенное действие с введенным значением.
-   * @since v.1.0.0
-   * @public
-   * @returns {void}
-   */
-  const handleErrors = useCallback(
-    (action) => {
-      try {
-        const result = action(+value);
-        if (isNaN(result)) {
-          throw Error();
-        } else {
-          setValue(result.toString());
-        }
-      } catch {
-        const prevValue = value;
-        setValue('Ошибка!');
-        setTimeout(() => {
-          setValue(prevValue);
-        }, 1100);
-      }
+      document.activeElement.blur();
     },
     [value],
   );
@@ -102,6 +61,105 @@ const useCalculator = () => {
   }, [value]);
 
   /**
+   * @method handleResetValue
+   * @description Обработчик нажатия на кнопку очистки дисплея.</br>
+   * Сбрасывает значение на дисплее на 0.
+   * @since v.1.0.0
+   * @public
+   * @returns {void}
+   */
+  const handleResetValue = useCallback(() => {
+    setValue('0');
+    setIsRadValue(false);
+  }, []);
+
+  /**
+   * @method handleBackspaceClick
+   * @description Обработчик нажатия на клавишу Backspace.</br>
+   * Удаляет последний введенный символ на дисплее.
+   * @since v.1.0.0
+   * @public
+   * @returns {void}
+   */
+  const handleBackspaceClick = useCallback(() => {
+    if (value.length > 1) {
+      setValue(value.slice(0, value.length - 1));
+    } else {
+      setValue('0');
+    }
+  }, [value]);
+
+  const handleScreenKeyboardInput = useCallback((evt) => handleChangeValue(evt.target.value), [
+    handleChangeValue,
+  ]);
+
+  const handleKeyboardInput = useCallback(
+    (evt) => {
+      const keyboardKeys = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '+',
+        '-',
+        '*',
+        '/',
+        '.',
+      ];
+      if (keyboardKeys.includes(evt.key)) {
+        handleChangeValue(evt.key);
+      } else if (evt.key === 'Escape') {
+        handleResetValue();
+      } else if (evt.key === 'Enter' || '=') {
+        handleComputeResult();
+      }
+      if (evt.key === 'Backspace') {
+        handleBackspaceClick();
+      }
+    },
+    [handleChangeValue, handleResetValue, handleComputeResult, handleBackspaceClick],
+  );
+
+  /**
+   * @method handleErrors
+   * @description Обработчик ошибок при выполнении математических действий.</br>
+   *  Принимает аргументом коллбэк action, который выполняет определенное действие.
+   *  Если в результате выполнения этого действия не произошло ошибок вычисления, результат
+   *  выводится на дисплей калькулятора. Если происходит ошибка вычисления, на дисплей
+   *  выводится сообщение об ошибке.
+   * @param {function} action - коллбэк, выполняет определенное действие с введенным значением.
+   * @since v.1.0.0
+   * @public
+   * @returns {void}
+   */
+  const handleErrors = useCallback(
+    (action) => {
+      try {
+        const result = action(+value);
+        if (isNaN(result)) {
+          throw Error();
+        } else {
+          setValue(result.toString());
+          setIsRadValue(true);
+        }
+      } catch {
+        const prevValue = value;
+        setValue('Ошибка!');
+        setTimeout(() => {
+          setValue(prevValue);
+        }, 1100);
+      }
+    },
+    [value],
+  );
+
+  /**
    * @method handleMemoPlusClick
    * @description Обработчик нажатия на клавишу M+.</br>
    * Проверяет корректность значения на дисплее и сохраняет его в память, если
@@ -117,6 +175,7 @@ const useCalculator = () => {
       } else {
         const newValue = memoPlusValue + +value;
         setMemoPlusValue(newValue);
+        setIsMemoPlusEmpty(false);
       }
     } catch {
       const prevValue = value;
@@ -143,6 +202,7 @@ const useCalculator = () => {
       } else {
         const newValue = memoMinusValue + +value;
         setMemoMinusValue(newValue);
+        setIsMemoMinusEmpty(false);
       }
     } catch {
       const prevValue = value;
@@ -178,6 +238,8 @@ const useCalculator = () => {
   const handleMemoClearClick = useCallback(() => {
     setMemoPlusValue(0);
     setMemoMinusValue(0);
+    setIsMemoPlusEmpty(true);
+    setIsMemoMinusEmpty(true);
   }, []);
 
   /**
@@ -245,25 +307,10 @@ const useCalculator = () => {
     handleErrors(Math.sqrt);
   }, [handleErrors]);
 
-  /**
-   * @method handleBackspaceClick
-   * @description Обработчик нажатия на клавишу Backspace.</br>
-   * Удаляет последний введенный символ на дисплее.
-   * @since v.1.0.0
-   * @public
-   * @returns {void}
-   */
-  const handleBackspaceClick = useCallback(() => {
-    if (value.length > 1) {
-      setValue(value.slice(0, value.length - 1));
-    } else {
-      setValue('0');
-    }
-  }, [value]);
-
   return {
     value,
-    handleChangeValue,
+    handleScreenKeyboardInput,
+    handleKeyboardInput,
     handleResetValue,
     handleComputeResult,
     handleMemoPlusClick,
@@ -276,6 +323,9 @@ const useCalculator = () => {
     handleComputeCtg,
     handleComputeSqrt,
     handleBackspaceClick,
+    isMemoPlusEmpty,
+    isMemoMinusEmpty,
+    isRadValue,
   };
 };
 export { useCalculator };

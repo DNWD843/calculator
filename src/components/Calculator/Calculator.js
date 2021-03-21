@@ -1,5 +1,7 @@
 import { useCalculator } from '../../hooks/useCalculator';
+import classNames from 'classnames';
 import './Calculator.css';
+import { useEffect } from 'react';
 
 /**
  * @module Calculator
@@ -10,7 +12,8 @@ import './Calculator.css';
 const Calculator = () => {
   const {
     value,
-    handleChangeValue,
+    handleScreenKeyboardInput,
+    handleKeyboardInput,
     handleResetValue,
     handleComputeResult,
     handleMemoPlusClick,
@@ -23,15 +26,53 @@ const Calculator = () => {
     handleComputeCtg,
     handleComputeSqrt,
     handleBackspaceClick,
+    isMemoPlusEmpty,
+    isMemoMinusEmpty,
+    isRadValue,
   } = useCalculator();
+
+  const mPlusScreenSegmentClassName = classNames(
+    'calculator__screen-segment',
+    'calculator__screen-segment_type_m-plus',
+    {
+      'calculator__screen-segment_visible': !isMemoPlusEmpty,
+    },
+  );
+
+  const mMinusScreenSegmentClassName = classNames(
+    'calculator__screen-segment',
+    'calculator__screen-segment_type_m-minus',
+    {
+      'calculator__screen-segment_visible': !isMemoMinusEmpty,
+    },
+  );
+
+  const radianSegmentClassName = classNames(
+    'calculator__screen-segment',
+    'calculator__screen-segment_type_rad',
+    {
+      'calculator__screen-segment_visible': isRadValue,
+    },
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyboardInput);
+    return () => document.removeEventListener('keydown', handleKeyboardInput);
+  }, [handleKeyboardInput]);
 
   return (
     <div className="calculator page__calculator">
-      <input type="text" readOnly value={value} className="calculator__screen"></input>
+      <div className="calculator__screen-field">
+        <span className={mPlusScreenSegmentClassName}>M+</span>
+        <span className={mMinusScreenSegmentClassName}>M-</span>
+        <span className={radianSegmentClassName}>rad</span>
+        <input type="text" readOnly value={value} className="calculator__screen"></input>
+      </div>
+
       <div className="calculator__buttons">
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_1"
           value="1"
         >
@@ -39,7 +80,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_2"
           value="2"
         >
@@ -47,7 +88,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_3"
           value="3"
         >
@@ -55,7 +96,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_4"
           value="4"
         >
@@ -63,7 +104,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_5"
           value="5"
         >
@@ -71,7 +112,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_6"
           value="6"
         >
@@ -79,7 +120,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_7"
           value="7"
         >
@@ -87,7 +128,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_8"
           value="8"
         >
@@ -95,7 +136,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_9"
           value="9"
         >
@@ -103,7 +144,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_0"
           value="0"
         >
@@ -118,7 +159,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_plus"
           value="+"
         >
@@ -126,7 +167,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_minus"
           value="-"
         >
@@ -134,7 +175,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_multiply"
           value="*"
         >
@@ -142,7 +183,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_division"
           value="/"
         >
@@ -150,7 +191,7 @@ const Calculator = () => {
         </button>
         <button
           type="button"
-          onClick={handleChangeValue}
+          onClick={handleScreenKeyboardInput}
           className="calculator__button calculator__button_value_dot"
           value="."
         >
