@@ -89,10 +89,24 @@ const useCalculator = () => {
     }
   }, [value]);
 
+  /**
+   * @method handleScreenKeyboardInput
+   * @description Обработчик ввода с кнопок калькулятора на экране
+   * @since v.1.1.0
+   * @public
+   * @returns {void}
+   */
   const handleScreenKeyboardInput = useCallback((evt) => handleChangeValue(evt.target.value), [
     handleChangeValue,
   ]);
 
+  /**
+   * @method handleKeyboardInput
+   * @description Обработчик ввода с клавиатуры
+   * @since v.1.1.0
+   * @public
+   * @returns {void}
+   */
   const handleKeyboardInput = useCallback(
     (evt) => {
       const keyboardKeys = [
